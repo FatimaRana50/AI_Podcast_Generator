@@ -51,9 +51,9 @@ python podcast_generator.py --topic "Future of Renewable Energy" \
 ```
 🖼️ Screenshots
 📥 How to run the code
-<p align="center"> <img src="images/p-1.PNG" width="600" alt="Running command example"> </p> <p align="center"> <img src="images/p2.PNG" width="600" alt="Script generation output"> </p> <p align="center"> <img src="images/p4.PNG" width="600" alt="Audio export log"> </p>
+<p align="center"> <img src="images/p-1.PNG" width="600" alt="Running command example"> </p> <p align="center"> <img src="images/p-2.PNG" width="600" alt="Script generation output"> </p> <p align="center"> <img src="images/p-4.PNG" width="600" alt="Audio export log"> </p>
 📜 Sample Generated Script
-<p align="center"> <img src="images/p3.PNG" width="600" alt="Sample podcast_script.txt"> </p>
+<p align="center"> <img src="images/p-3.PNG" width="600" alt="Sample podcast_script.txt"> </p>
 ⚙️ Tech Stack
 🧠 Groq LLaMA3
 
