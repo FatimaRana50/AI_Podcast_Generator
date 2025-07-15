@@ -6,7 +6,7 @@ from gtts import gTTS
 import requests
 
 # Load environment variables
-load_dotenv()
+load_dotenv() 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 DEFAULT_MODEL = "llama3-70b-8192"
@@ -67,6 +67,7 @@ def main():
     parser.add_argument("--output_audio_file", default=DEFAULT_AUDIO_FILE)
     parser.add_argument("--llm_model", default=DEFAULT_MODEL)
     args = parser.parse_args()
+    print("Starting AI Podcast Generation...")
 
     print("Generating script...")
     script = generate_script_groq(args.topic, args.llm_model)
