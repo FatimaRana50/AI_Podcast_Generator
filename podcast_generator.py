@@ -58,7 +58,11 @@ def generate_audio_gtts(text, filename):
     tts = gTTS(text)
     tts.save(filename)
     return AudioSegment.from_file(filename, format="mp3")
+from pydub import AudioSegment
 
+def add_intro_audio(main_audio):
+    intro = AudioSegment.from_file("assets/intro_music.mp3")  # Example
+    return intro + main_audio
 
 def main():
     parser = argparse.ArgumentParser()
@@ -87,7 +91,8 @@ def main():
         audio = generate_audio_gtts(line, temp_filename)
         full_audio += audio + AudioSegment.silent(duration=500)
         temp_files.append(temp_filename)
-
+    print("Adding intro music...")
+    full_audio = add_intro_audio(full_audio)
     print("Saving audio to", args.output_audio_file)
     full_audio.export(args.output_audio_file, format=args.output_audio_file.split(".")[-1])
 
