@@ -1,141 +1,72 @@
 🎙️ AI Podcast Generator
-A powerful tool that leverages LLMs (via Groq API), gTTS, and FastAPI to generate podcast scripts and corresponding audio on any topic. Perfect for content creators, educators, and podcast enthusiasts!
+This project uses LLMs (via Groq API), gTTS, and FastAPI to generate a podcast script and corresponding audio on any topic you choose. You can interact with the service through a REST API powered by FastAPI.
 
-https://images/p-5.PNG
-https://images/p-6.PNG
+📁 Project Structure
 
-🌟 Features
-AI-Powered Script Generation: Uses state-of-the-art LLMs (like LLaMA3-70B) to create natural podcast dialogues
-
-Text-to-Speech Conversion: Converts generated scripts into high-quality audio using gTTS
-
-REST API Interface: Easy integration with other applications via FastAPI
-
-Customizable Output: Control over script length, speakers, and output formats
-
-Fast Processing: Generates complete podcast episodes in minutes
-
-📦 Project Structure
-text
 .
-├── images/                  # Screenshots for documentation
+├── images/
 │   ├── p-5.PNG
 │   └── p-6.PNG
-├── podcast_generator.py     # Core podcast generation logic
-├── main.py                  # FastAPI application entry point
-├── requirements.txt         # Python dependencies
-├── .env                     # Environment configuration
-└── README.md                # This documentation
-🚀 Quick Start
-Prerequisites
-Python 3.8+
-
-Groq API key (free tier available)
-
-FFmpeg (for audio processing)
-
-Installation
-Clone the repository
-
-bash
-git clone https://github.com/yourusername/ai-podcast-generator.git
+├── podcast_generator.py
+├── main.py
+├── requirements.txt
+├── .env
+└── README.md
+⚙️ Setup Instructions
+1. ✅ Clone the Repository
+```
+git clone https://github.com/FatimaRana50/AI_Podcast_Generator/tree/fastapi-changes
 cd ai-podcast-generator
-Set up virtual environment (recommended)
-
-bash
+```
+2. 🐍 Create Virtual Environment (optional but recommended)
 ```
 python -m venv venv
-`
-# Windows
-venv\Scripts\activate
-# Linux/macOS
-source venv/bin/activate
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/macOS
 ```
-Install dependencies
-
-bash
+3. 📦 Install Dependencies
 ```
 pip install -r requirements.txt
 ```
-Configure environment variables
-Create a .env file with:
+4. 🔐 Configure Environment Variables
+Create a .env file in the root directory with the following content:
 
-env
+
 GROQ_API_KEY=your_groq_api_key_here
-🏃 Running the Application
-Start the FastAPI server:
+Replace your_groq_api_key_here with your actual API key from Groq.
 
-bash
+🚀 Running the Application
+Use uvicorn to start the FastAPI server:
+
 ```
 uvicorn main:app --reload
 ```
-Access the interactive API docs at:
+Once running, visit: http://127.0.0.1:8000/docs
 
-```
-http://127.0.0.1:8000/docs
-```
-📡 API Endpoints
-POST /generate_podcast
-Generates a podcast script and audio file on the given topic.
-
+🔄 Using the API
+▶️ POST /generate_podcast
 Request Body:
+
 ```
-json
 {
-  "topic": "The Future of AI in Education",
+  "topic": "Mental Health in Teens",
   "llm_model": "llama3-70b-8192",
-  "output_script_filename": "ai_education_script.txt",
-  "output_audio_path": "ai_education_podcast.mp3",
-  "num_exchanges": 5
+  "output_script_filename": "podcast_script.txt",
+  "output_audio_path": "podcast.mp3"
 }
 ```
-Parameters:
+Response:
 
-topic (required): Subject for the podcast
-
-llm_model: Groq model to use (default: "llama3-70b-8192")
-
-output_script_filename: Script output path (default: "podcast_script.txt")
-
-output_audio_path: Audio output path (default: "podcast.mp3")
-
-num_exchanges: Number of host/guest exchanges (default: 3)
-
-Successful Response:
 ```
-json
 {
   "message": "Podcast generated successfully.",
-  "script_file": "ai_education_script.txt",
-  "audio_file": "ai_education_podcast.mp3",
-  "generation_time": 45.2
+  "script_file": "podcast_script.txt",
+  "audio_file": "podcast.mp3"
 }
 ```
-� How It Works
-Script Generation:
-
-The system prompts the LLM to create a podcast dialogue with specified number of exchanges
-
-Output is formatted with clear speaker labels (HOST/GUEST)
-
-Audio Production:
-
-Script is parsed into individual speaker segments
-
-Each segment is converted to speech using gTTS
-
-Audio segments are merged with smooth transitions
-
-Final mix is saved as MP3
-
-Output Delivery:
-
-Text script saved to specified file
-
-Audio file saved to specified path
-
-API returns paths to generated files
-
+📷 Screenshots
+✅ API Test in Swagger UI
+<p align="center"> <img src="images/p-5.PNG" width="600" alt="API Input"> </p> <p align="center"> <img src="images/p-6.PNG" width="600" alt="API Output"> </p>
 🛠️ Dependencies
 See requirements.txt for complete list:
 
@@ -150,6 +81,17 @@ gTTS: Google Text-to-Speech interface
 pydub: Audio processing
 
 requests: HTTP requests for Groq API
+
+🧠 How It Works
+You send a topic via POST request to /generate_podcast.
+
+The app calls Groq API (e.g., llama3-70b) to generate a podcast script with 3 exchanges between HOST and GUEST.
+
+The script is parsed into speaker segments.
+
+The gTTS library generates speech for each line.
+
+The speech clips are merged into one podcast audio file. can u format je radme better please and add some more detail
 
 📚 Example Use Cases
 Content Creation: Quickly generate podcast episodes on trending topics
