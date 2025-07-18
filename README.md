@@ -1,4 +1,6 @@
-**🎙️ AI Podcast Generator**
+***🎙️ AI Podcast Generator***
+
+
 This project uses LLMs via Groq API, gTTS, and FastAPI to generate a podcast script and corresponding audio on any topic. You can interact with the service through a RESTful API powered by FastAPI.
 
 📁 Project Structure
