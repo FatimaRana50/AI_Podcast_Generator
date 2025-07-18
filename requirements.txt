@@ -4,3 +4,7 @@ pydub
 python-dotenv
 argparse
 requests
+TTS
+fastapi
+uvicorn
+pydantic
