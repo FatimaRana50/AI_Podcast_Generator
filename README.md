@@ -1,78 +1,92 @@
-# 🎙️ AI Podcast Generator
+🎙️ AI Podcast Generator
+This project uses LLMs (via Groq API), gTTS, and FastAPI to generate a podcast script and corresponding audio on any topic you choose. You can interact with the service through a REST API powered by FastAPI.
 
-This project automatically generates a podcast episode from a given topic using:
+📁 Project Structure
 
-- 💬 Script generation via Groq's LLaMA 3 model (`llama3-70b-8192`)
-- 🗣️ Text-to-speech conversion using **gTTS** (Google Text-to-Speech)
-
-> 🧠 Previously used **ElevenLabs TTS**, but due to free-tier limits, the fallback is now `gTTS`, which works reliably and freely.
-
----
-
-## 📌 Features
-
-- Command-line interface for flexible use
-- Generates a 3x3 dialog podcast between a Host and a Guest
-- Outputs a podcast script file and audio file
-- Supports different LLM models (Groq-supported)
-
----
-
-## 🚀 How to Use
-
-### 1️⃣ Install Requirements
-
-Make sure you have Python 3.7+ installed, then run:
-
+.
+├── images/
+│   ├── p-5.PNG
+│   └── p-6.PNG
+├── podcast_generator.py
+├── main.py
+├── requirements.txt
+├── .env
+└── README.md
+⚙️ Setup Instructions
+1. ✅ Clone the Repository
+```
+git clone https://github.com/yourusername/ai-podcast-generator.git
+cd ai-podcast-generator
+```
+2. 🐍 Create Virtual Environment (optional but recommended)
+```
+python -m venv venv
+venv\Scripts\activate  # Windows
+source venv/bin/activate  # Linux/macOS
+```
+3. 📦 Install Dependencies
 ```
 pip install -r requirements.txt
 ```
-2️⃣ Setup Environment
-Create a .env file and add your Groq API key:
+4. 🔐 Configure Environment Variables
+Create a .env file in the root directory with the following content:
+
+
+GROQ_API_KEY=your_groq_api_key_here
+Replace your_groq_api_key_here with your actual API key from Groq.
+
+🚀 Running the Application
+Use uvicorn to start the FastAPI server:
+
 ```
-
-GROQ_API_KEY=your_groq_key_here
+uvicorn main:app --reload
 ```
-Get your free key at: https://console.groq.com/
+Once running, visit: http://127.0.0.1:8000/docs
 
-3️⃣ Run the Generator
-Basic usage:
+🔄 Using the API
+▶️ POST /generate_podcast
+Request Body:
+
 ```
-
-python podcast_generator.py --topic "Marine Life Podcast"
+{
+  "topic": "Mental Health in Teens",
+  "llm_model": "llama3-70b-8192",
+  "output_script_filename": "podcast_script.txt",
+  "output_audio_path": "podcast.mp3"
+}
 ```
-Custom output:
+Response:
+
 ```
-
-python podcast_generator.py --topic "Future of Renewable Energy" \
---output_script_file "renewable_script.txt" \
---output_audio_file "renewable_audio.mp3" \
---llm_model "llama3-70b-8192"
+{
+  "message": "Podcast generated successfully.",
+  "script_file": "podcast_script.txt",
+  "audio_file": "podcast.mp3"
+}
 ```
-🖼️ Screenshots
-### 📥 How to Run the Code
+📷 Screenshots
+✅ API Test in Swagger UI
+<p align="center"> <img src="images/p-5.PNG" width="600" alt="API Input"> </p> <p align="center"> <img src="images/p-6.PNG" width="600" alt="API Output"> </p>
+📦 requirements.txt
+```
+openai
+elevenlabs
+pydub
+python-dotenv
+argparse
+requests
+TTS
+fastapi
+uvicorn
+pydantic
+```
+🧠 How It Works
+You send a topic via POST request to /generate_podcast.
 
-<img src="images/p-1.PNG" width="600" alt="Running command example">
-<br/>
-<img src="images/p-2.PNG" width="600" alt="Script generation output">
-<br/>
-<img src="images/p-4.PNG" width="600" alt="Audio export log">
+The app calls Groq API (e.g., llama3-70b) to generate a podcast script with 3 exchanges between HOST and GUEST.
 
-### 📜 Sample Generated Script
+The script is parsed into speaker segments.
 
-<img src="images/p-3.PNG" width="600" alt="Sample podcast_script.txt">
-⚙️ Tech Stack
-🧠 Groq LLaMA3
+The gTTS library generates speech for each line.
 
-🔊 gTTS - Google Text-to-Speech
-
-🎛️ Pydub
-
-🐍 Python 3
-
-📌 Notes
-Previously used ElevenLabs for high-quality voices (Rachel and Adam), but free-tier voice generation is now blocked due to detection of "unusual activity."
-
-Switched to gTTS for open and reliable text-to-speech..lkijhy7
-📄 License
-MIT License
+The speech clips are merged into one podcast audio file.
