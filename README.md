@@ -67,6 +67,8 @@ Frontend UI (web form): http://127.0.0.1:8000/
 
 🔄 Using the API
 ▶️ POST /generate_podcast
+
+
 Request Body:
 
 ```
@@ -87,6 +89,7 @@ Response:
 }
 ```
 🧠 How It Works
+
 You enter a topic.
 
 The LLM (e.g., llama3-70b) generates a 3-part dialogue script (HOST vs GUEST).
@@ -102,6 +105,7 @@ Final script and audio are served via UI or API.
 🌐 UI Preview (Web Interface)
 <p align="center"> <img src="images/p-7.PNG" width="600" alt="Frontend UI Screenshot"> </p> <p align="center"> <img src="images/p-8.PNG" width="600" alt="Script Output Screenshot"> </p>
 📚 Example Use Cases
+
 🎧 Content Creation: Quickly produce podcasts on trending topics
 
 📘 Education: Generate teaching materials in audio format
@@ -111,6 +115,7 @@ Final script and audio are served via UI or API.
 ♿ Accessibility: Convert text topics into spoken content
 
 🛠️ Key Dependencies
+
 Package	Purpose
 fastapi	Web API backend
 uvicorn	ASGI server
