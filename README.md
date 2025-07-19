@@ -1,33 +1,44 @@
-**🎙️ AI Podcast Generator**
+# 🎙️ AI Podcast Generator
 
+This project uses **LLMs (via Groq API)**, **gTTS**, and **FastAPI** to generate a podcast script and audio for any given topic. You can interact with the service using a **simple web-based frontend** or a RESTful API (via Swagger UI).
 
-This project uses LLMs via Groq API, gTTS, and FastAPI to generate a podcast script and corresponding audio on any topic. You can interact with the service through a RESTful API powered by FastAPI.
+---
 
-📁 Project Structure
-css
-Copy
-Edit
+## 📁 Project Structure
+
 .
 ├── images/
-│   ├── p-5.PNG
-│   └── p-6.PNG
+│ ├── p-5.PNG # Swagger Input Screenshot
+│ ├── p-6.PNG # Swagger Output Screenshot
+│ ├── p-7.PNG # Frontend UI Screenshot
+│ └── p-8.PNG # Script Output Screenshot
+├── static/
+│ ├── index.html
+│ ├── style.css
+│ └── script.js
 ├── podcast_generator.py
 ├── main.py
 ├── requirements.txt
 ├── .env
 └── README.md
-⚙️ Setup Instructions
-1. ✅ Clone the Repository
+
+
+
+---
+
+## ⚙️ Setup Instructions
+
+### 1. ✅ Clone the Repository
+
+```bash
+git clone https://github.com/FatimaRana50/AI_Podcast_Generator.git
+cd AI_Podcast_Generator
 ```
-git clone https://github.com/FatimaRana50/AI_Podcast_Generator/tree/fastapi-changes
-cd ai-podcast-generator
-```
-2. 🐍 Create Virtual Environment (recommended)
-```
+2. 🐍 Create a Virtual Environment
+```t
 # Windows
 python -m venv venv
 venv\Scripts\activate
-
 
 # Linux/macOS
 python -m venv venv
@@ -38,29 +49,26 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 4. 🔐 Configure Environment Variables
-Create a .env file in the root directory with the following content:
+Create a .env file in the root directory:
 
 ```
 GROQ_API_KEY=your_groq_api_key_here
 ```
-Replace your_groq_api_key_here with your actual Groq API key.
-
 🚀 Running the Application
-Start the FastAPI server using uvicorn:
-
+1. 🖥️ Start the FastAPI Backend Server
 ```
 uvicorn main:app --reload
-```
-Once running, open your browser to:
+Visit:
 
+Swagger UI (API interface): http://127.0.0.1:8000/docs
+
+Frontend UI (web form): http://127.0.0.1:8000/
 ```
-http://127.0.0.1:8000/docs
-```
-This opens the interactive Swagger UI where you can test the API.
 
 🔄 Using the API
 ▶️ POST /generate_podcast
 Request Body:
+
 ```
 {
   "topic": "Mental Health in Teens",
@@ -70,6 +78,7 @@ Request Body:
 }
 ```
 Response:
+
 ```
 {
   "message": "Podcast generated successfully.",
@@ -77,46 +86,41 @@ Response:
   "audio_file": "podcast.mp3"
 }
 ```
-📚 Example Use Cases
-🎧 Content Creation: Quickly generate podcast episodes on trending topics
-
-📘 Education: Create learning materials in podcast format
-
-🧪 Prototyping: Test podcast concepts before professional recording
-
-♿ Accessibility: Generate audio content from text-based topics
-
 🧠 How It Works
-You send a topic via a POST request to /generate_podcast.
+You enter a topic.
 
-The app calls the Groq LLM API (e.g., llama3-70b) to generate a podcast script with 3 exchanges between HOST and GUEST.
+The LLM (e.g., llama3-70b) generates a 3-part dialogue script (HOST vs GUEST).
 
-The script is parsed and split by speaker.
+Each line is passed to gTTS to convert to speech.
 
-Each line is converted to speech using gTTS.
+All audio clips are merged using pydub into one .mp3 file.
 
-All audio clips are merged into a final podcast .mp3 file.
+Final script and audio are served via UI or API.
 
-📷 Screenshots
-✅ API Test in Swagger UI
+📷 API Preview (Swagger)
 <p align="center"> <img src="images/p-5.PNG" width="600" alt="API Input Screenshot"> </p> <p align="center"> <img src="images/p-6.PNG" width="600" alt="API Output Screenshot"> </p>
-🛠️ Dependencies
-See requirements.txt for the full list. Key libraries include:
+🌐 UI Preview (Web Interface)
+<p align="center"> <img src="images/p-7.PNG" width="600" alt="Frontend UI Screenshot"> </p> <p align="center"> <img src="images/p-8.PNG" width="600" alt="Script Output Screenshot"> </p>
+📚 Example Use Cases
+🎧 Content Creation: Quickly produce podcasts on trending topics
 
-fastapi – Web framework
+📘 Education: Generate teaching materials in audio format
 
-uvicorn – ASGI server
+🧪 Prototyping: Try podcast ideas before professional recording
 
-python-dotenv – Loads environment variables from .env
+♿ Accessibility: Convert text topics into spoken content
 
-gTTS – Google Text-to-Speech
-
-pydub – Audio merging/processing
-
-requests – API calls to Groq LLM endpoint
+🛠️ Key Dependencies
+Package	Purpose
+fastapi	Web API backend
+uvicorn	ASGI server
+python-dotenv	Environment variable loading
+gTTS	Text-to-speech
+pydub	Audio processing and merging
+requests	API calls to Groq LLM endpoint
 
 🤝 Contributing
-Contributions are welcome! Please consider submitting:
+Contributions are welcome! Feel free to submit:
 
 🐛 Bug fixes
 
@@ -124,7 +128,4 @@ Contributions are welcome! Please consider submitting:
 
 📝 Documentation improvements
 
-Open an issue or PR to get started!
-
-📜 License
-This project is licensed under the MIT License.
+Open a PR or issue to get started.
