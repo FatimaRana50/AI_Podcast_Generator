@@ -1,78 +1,130 @@
-# 🎙️ AI Podcast Generator
+**🎙️ AI Podcast Generator**
 
-This project automatically generates a podcast episode from a given topic using:
 
-- 💬 Script generation via Groq's LLaMA 3 model (`llama3-70b-8192`)
-- 🗣️ Text-to-speech conversion using **gTTS** (Google Text-to-Speech)
+This project uses LLMs via Groq API, gTTS, and FastAPI to generate a podcast script and corresponding audio on any topic. You can interact with the service through a RESTful API powered by FastAPI.
 
-> 🧠 Previously used **ElevenLabs TTS**, but due to free-tier limits, the fallback is now `gTTS`, which works reliably and freely.
+📁 Project Structure
+css
+Copy
+Edit
+.
+├── images/
+│   ├── p-5.PNG
+│   └── p-6.PNG
+├── podcast_generator.py
+├── main.py
+├── requirements.txt
+├── .env
+└── README.md
+⚙️ Setup Instructions
+1. ✅ Clone the Repository
+```
+git clone https://github.com/FatimaRana50/AI_Podcast_Generator/tree/fastapi-changes
+cd ai-podcast-generator
+```
+2. 🐍 Create Virtual Environment (recommended)
+```
+# Windows
+python -m venv venv
+venv\Scripts\activate
 
----
 
-## 📌 Features
-
-- Command-line interface for flexible use
-- Generates a 3x3 dialog podcast between a Host and a Guest
-- Outputs a podcast script file and audio file
-- Supports different LLM models (Groq-supported)
-
----
-
-## 🚀 How to Use
-
-### 1️⃣ Install Requirements
-
-Make sure you have Python 3.7+ installed, then run:
-
+# Linux/macOS
+python -m venv venv
+source venv/bin/activate
+```
+3. 📦 Install Dependencies
 ```
 pip install -r requirements.txt
 ```
-2️⃣ Setup Environment
-Create a .env file and add your Groq API key:
+4. 🔐 Configure Environment Variables
+Create a .env file in the root directory with the following content:
+
 ```
-
-GROQ_API_KEY=your_groq_key_here
+GROQ_API_KEY=your_groq_api_key_here
 ```
-Get your free key at: https://console.groq.com/
+Replace your_groq_api_key_here with your actual Groq API key.
 
-3️⃣ Run the Generator
-Basic usage:
+🚀 Running the Application
+Start the FastAPI server using uvicorn:
+
 ```
-
-python podcast_generator.py --topic "Marine Life Podcast"
+uvicorn main:app --reload
 ```
-Custom output:
+Once running, open your browser to:
+
 ```
-
-python podcast_generator.py --topic "Future of Renewable Energy" \
---output_script_file "renewable_script.txt" \
---output_audio_file "renewable_audio.mp3" \
---llm_model "llama3-70b-8192"
+http://127.0.0.1:8000/docs
 ```
-🖼️ Screenshots
-### 📥 How to Run the Code
+This opens the interactive Swagger UI where you can test the API.
 
-<img src="images/p-1.PNG" width="600" alt="Running command example">
-<br/>
-<img src="images/p-2.PNG" width="600" alt="Script generation output">
-<br/>
-<img src="images/p-4.PNG" width="600" alt="Audio export log">
+🔄 Using the API
+▶️ POST /generate_podcast
+Request Body:
+```
+{
+  "topic": "Mental Health in Teens",
+  "llm_model": "llama3-70b-8192",
+  "output_script_filename": "podcast_script.txt",
+  "output_audio_path": "podcast.mp3"
+}
+```
+Response:
+```
+{
+  "message": "Podcast generated successfully.",
+  "script_file": "podcast_script.txt",
+  "audio_file": "podcast.mp3"
+}
+```
+📚 Example Use Cases
+🎧 Content Creation: Quickly generate podcast episodes on trending topics
 
-### 📜 Sample Generated Script
+📘 Education: Create learning materials in podcast format
 
-<img src="images/p-3.PNG" width="600" alt="Sample podcast_script.txt">
-⚙️ Tech Stack
-🧠 Groq LLaMA3
+🧪 Prototyping: Test podcast concepts before professional recording
 
-🔊 gTTS - Google Text-to-Speech
+♿ Accessibility: Generate audio content from text-based topics
 
-🎛️ Pydub
+🧠 How It Works
+You send a topic via a POST request to /generate_podcast.
 
-🐍 Python 3
+The app calls the Groq LLM API (e.g., llama3-70b) to generate a podcast script with 3 exchanges between HOST and GUEST.
 
-📌 Notes
-Previously used ElevenLabs for high-quality voices (Rachel and Adam), but free-tier voice generation is now blocked due to detection of "unusual activity."
+The script is parsed and split by speaker.
 
-Switched to gTTS for open and reliable text-to-speech..lkijhy7
-📄 License
-MIT License
+Each line is converted to speech using gTTS.
+
+All audio clips are merged into a final podcast .mp3 file.
+
+📷 Screenshots
+✅ API Test in Swagger UI
+<p align="center"> <img src="images/p-5.PNG" width="600" alt="API Input Screenshot"> </p> <p align="center"> <img src="images/p-6.PNG" width="600" alt="API Output Screenshot"> </p>
+🛠️ Dependencies
+See requirements.txt for the full list. Key libraries include:
+
+fastapi – Web framework
+
+uvicorn – ASGI server
+
+python-dotenv – Loads environment variables from .env
+
+gTTS – Google Text-to-Speech
+
+pydub – Audio merging/processing
+
+requests – API calls to Groq LLM endpoint
+
+🤝 Contributing
+Contributions are welcome! Please consider submitting:
+
+🐛 Bug fixes
+
+✨ New features
+
+📝 Documentation improvements
+
+Open an issue or PR to get started!
+
+📜 License
+This project is licensed under the MIT License.

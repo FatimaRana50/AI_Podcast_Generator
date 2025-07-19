@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Podcast Generator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1> AI Podcast Generator</h1>
+    <input type="text" id="topicInput" placeholder="Enter a podcast topic" />
+    <button onclick="generatePodcast()">Generate Podcast</button>
+
+    <h2> Generated Script:</h2>
+    <pre id="scriptOutput"></pre>
+
+    <h2> Audio Playback:</h2>
+    <audio id="audioPlayer" controls></audio>
+
+    <div class="downloads">
+      <a id="downloadScript" download>⬇️ Download Script</a>
+      <a id="downloadAudio" download>⬇️ Download Audio</a>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

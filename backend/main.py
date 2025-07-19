@@ -3,6 +3,8 @@ from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
 
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from podcast_generator import (
     generate_podcast_script_text,
@@ -11,6 +13,13 @@ from podcast_generator import (
 )
 load_dotenv()
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # for testing only
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class PodcastRequest(BaseModel):
     topic: str
@@ -45,3 +54,11 @@ async def generate_podcast(req: PodcastRequest):
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+from fastapi.staticfiles import StaticFiles
+import os
+
+# Absolute path to the folder where the audio and script are saved
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+app.mount("/audio", StaticFiles(directory=BASE_DIR), name="audio")
+app.mount("/files", StaticFiles(directory=BASE_DIR), name="files")
